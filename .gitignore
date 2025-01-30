@@ -1,0 +1,15 @@
+# Node.js-Abhängigkeiten
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build-Ordner
+dist/
+.out/
+.cache/
+.vite/
+
+# Editor/IDE-Dateien
+.vscode/
+.idea/
+.DS_Store
