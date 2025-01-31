@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { FaGlobe, FaLock, FaUserCircle } from 'react-icons/fa' // FontAwesome-Icons importieren
+import { FaGlobe, FaLock, FaUserCircle } from 'react-icons/fa'
 
 export const DreamView = () => {
   const location = useLocation()

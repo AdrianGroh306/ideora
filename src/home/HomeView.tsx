@@ -118,7 +118,6 @@ export const HomeView = () => {
         </AnimatePresence>
       </div>
 
-      {/* Floating Inspire Button (Bottom Right) */}
       <motion.button
         onClick={showRandomInspiration}
         whileHover={{ scale: 1.1 }}
