@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
+import { Navbar } from '../components/Navbar'
 
 interface IdeaEntry {
   id: number
@@ -57,6 +58,8 @@ export const HomeView = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-900 via-purple-900 to-black text-white px-4">
+
+        <Navbar />
       {/* Ideora Title */}
       <h1 className="text-6xl font-extrabold mb-4 text-center tracking-wide drop-shadow-lg">
         <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-500">
