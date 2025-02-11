@@ -2,15 +2,36 @@
 node_modules/
 package-lock.json
 yarn.lock
-.env
 
-# Build-Ordner
+# Umgebungsvariablen
+.env
+.env.local
+.env.*.local
+
+# Build-Ordner (Frontend + Backend)
 dist/
-.out/
+out/
 .cache/
 .vite/
+
+# Log-Dateien
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # Editor/IDE-Dateien
 .vscode/
 .idea/
 .DS_Store
+Thumbs.db
+
+# TypeScript-Output
+*.tsbuildinfo
+
+# Playwright
+test-results/
+playwright-report/
+
+# Backend-spezifische Cache/Logs
+logs/
+*.log
