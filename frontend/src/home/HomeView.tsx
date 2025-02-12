@@ -21,12 +21,29 @@ export const HomeView = () => {
 
   function addIdea() {
     if (inputValue.trim()) {
-      const newIdea = { id: Date.now(), title: inputValue.trim() }
-      setInputValue("")
-      setProgress(0)
-
-      // Direkt zur DreamView navigieren
-      navigate(`/dream/${newIdea.id}`, { state: { dreamTitle: newIdea.title } })
+      const newIdea = {
+        title: inputValue.trim(),
+        description: "",
+        category: "General",
+        visibility: "private",
+        isGoal: false
+      };
+  
+      fetch("http://localhost:5001/api/goals", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newIdea)
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data._id) {
+            navigate(`/goal/${data._id}`, { state: { goalTitle: data.title } });
+          }
+        })
+        .catch((error) => console.error("Error creating goal:", error));
+  
+      setInputValue("");
+      setProgress(0);
     }
   }
 

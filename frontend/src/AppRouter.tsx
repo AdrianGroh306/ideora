@@ -1,15 +1,15 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { HomeView } from "./home/HomeView";
-import { DreamView } from "./home/DreamView";
-import { IdeasOverview } from "./home/IdeasOverview";
+import { GoalView } from "./home/GoalView";
+import { GoalsHub } from "./home/GoalsHub";
 
 export const AppRouter = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<HomeView />} />
-        <Route path="/dream/:idea" element={<DreamView />} />
-        <Route path="/ideas" element={<IdeasOverview />} />
+        <Route path="/goal/:idea" element={<GoalView />} />
+        <Route path="/ideas" element={<GoalsHub />} />
       </Routes>
     </Router>
   );
