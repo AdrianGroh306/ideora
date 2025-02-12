@@ -46,7 +46,7 @@ export const Navbar = () => {
             deora
           </motion.span>
         </span>
-        <Link to="/ideas" className="text-white text-xl font-semibold">
+        <Link to="/hub" className="text-white text-xl font-semibold">
         🚀 GoalHub
       </Link>
 

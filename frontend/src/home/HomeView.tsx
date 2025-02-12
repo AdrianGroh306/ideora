@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react"
 import { AnimatePresence, motion } from "framer-motion"
-import { Navbar } from "../components/Navbar"
 import { useNavigate } from "react-router-dom"
 
 export const HomeView = () => {
@@ -70,8 +69,8 @@ export const HomeView = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-900 via-blue-900 to-black text-white px-4">
-      <Navbar />
+    <div className="min-h-screen flex flex-col items-center justify-center bg-transparent text-white px-4">
+
 
       {/* Hero Section */}
       <motion.h1

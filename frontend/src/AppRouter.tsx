@@ -1,16 +1,21 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { HomeView } from "./home/HomeView";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Layout } from "./home/Layout";
+import { GoalHub } from "./home/GoalHub";
 import { GoalView } from "./home/GoalView";
-import { GoalsHub } from "./home/GoalsHub";
+import { HomeView } from "./home/HomeView";
 
-export const AppRouter = () => {
+
+export const AppRouter: React.FC = () => {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomeView />} />
-        <Route path="/goal/:goalId" element={<GoalView />} />
-        <Route path="/ideas" element={<GoalsHub />} />
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomeView />} />
+          <Route path="/hub" element={<GoalHub />} />
+          <Route path="/goal/:goalId" element={<GoalView />} />
+        </Route>
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 };

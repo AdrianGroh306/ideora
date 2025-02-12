@@ -71,12 +71,11 @@ export const GoalView = () => {
     setBuddyAccepted(true);
   }
 
-  if (loading) return <p className="text-white">Loading...</p>;
+  if (loading) return console.log("Loading...");
   if (error) return <p className="text-red-500">{error}</p>;
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start pt-20 bg-gradient-to-b from-gray-900 via-blue-900 to-black text-white px-4 relative">
-      <Navbar />
+    <div className="min-h-screen flex flex-col items-center justify-start pt-20 text-white px-4 relative">
       <motion.div
         className="w-full max-w-4xl grid grid-cols-7 gap-4 items-start mt-6"
         initial={{ opacity: 0, y: -10 }}
