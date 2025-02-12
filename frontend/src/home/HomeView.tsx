@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
-import { Navbar } from '../components/Navbar'
+import { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { Navbar } from "../components/Navbar"
+import { useNavigate } from "react-router-dom"
 
 interface IdeaEntry {
   id: number
@@ -11,7 +11,7 @@ interface IdeaEntry {
 export const HomeView = () => {
   const navigate = useNavigate()
   const [ideas, setIdeas] = useState<IdeaEntry[]>([])
-  const [inputValue, setInputValue] = useState('')
+  const [inputValue, setInputValue] = useState("")
   const [progress, setProgress] = useState(0)
   const [typing, setTyping] = useState(false)
   const [inspirationText, setInspirationText] = useState<string | null>(null)
@@ -29,7 +29,7 @@ export const HomeView = () => {
     if (inputValue.trim()) {
       const newIdea: IdeaEntry = { id: Date.now(), title: inputValue.trim() }
       setIdeas([...ideas, newIdea])
-      setInputValue('')
+      setInputValue("")
       setProgress(0)
     }
   }
@@ -44,12 +44,12 @@ export const HomeView = () => {
 
   function showRandomInspiration() {
     const inspirationPool = [
-      'Dream big. Start small. Act now.',
-      'An idea is just the beginning. Take action!',
-      'Your imagination is limitless, your execution shouldn’t be.',
-      'Find a problem, create a solution, change the world.',
-      'Small steps lead to big achievements.',
-      'The best way to predict the future is to create it.'
+      "Dream big. Start small. Act now.",
+      "An idea is just the beginning. Take action!",
+      "Your imagination is limitless, your execution shouldn’t be.",
+      "Find a problem, create a solution, change the world.",
+      "Small steps lead to big achievements.",
+      "The best way to predict the future is to create it."
     ]
     const randomIndex = Math.floor(Math.random() * inspirationPool.length)
     setInspirationText(inspirationPool[randomIndex])
@@ -57,52 +57,63 @@ export const HomeView = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-900 via-purple-900 to-black text-white px-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-900 via-blue-900 to-black text-white px-4">
 
-        <Navbar />
-      {/* Ideora Title */}
-      <h1 className="text-6xl font-extrabold mb-4 text-center tracking-wide drop-shadow-lg">
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-500">
-          Ideora
-        </span>
-      </h1>
+      <Navbar />
+      
+      {/* Hero Section */}
+      <motion.h1
+        className="text-6xl font-extrabold mb-4 text-center tracking-wide drop-shadow-lg"
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        Bring Your <span className="text-sky-400">Dreams</span> to Life 
+      </motion.h1>
 
-      {/* Input Section with Attached Button */}
-      <div className="relative w-full max-w-lg flex">
-        {/* Input Field */}
+      <motion.p
+        className="mt-4 text-lg text-gray-300 max-w-2xl text-center"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
+      >
+        Ideora helps you collect, organize, and achieve your biggest ideas.
+      </motion.p>
+
+      {/* Input Section mit Fortschrittsbalken */}
+      <div className="relative w-full max-w-lg flex mt-6">
         <div className="flex-grow relative">
           <input
             type="text"
             value={inputValue}
             onChange={handleInputChange}
-            placeholder="What’s your dream?"
+            placeholder="What’s your idea?"
             className="w-full px-4 py-3 bg-gray-800 text-white rounded-l-lg focus:outline-none"
           />
-          {/* Progressbar Inside Input */}
           <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-700 rounded-bl-lg">
             <motion.div
-              className="h-full bg-pink-500 rounded-bl-lg"
+              className="h-full bg-white rounded-bl-lg"
               style={{ width: `${progress}%` }}
               animate={{ width: `${progress}%` }}
             />
           </div>
         </div>
 
-        {/* Submit Button (attached to input, same color as Progressbar) */}
+        {/* Button zum Hinzufügen einer Idee */}
         <motion.button
           onClick={addIdea}
           disabled={progress < 100}
           whileHover={{ scale: progress >= 100 ? 1.05 : 1 }}
           whileTap={{ scale: 0.95 }}
           className={`px-5 py-3 font-semibold rounded-r-lg transition-all ${
-            progress >= 100 ? 'bg-pink-500 text-white' : 'bg-gray-600 text-gray-400'
+            progress >= 100 ? "bg-white text-sky-400" : "bg-gray-600 text-gray-400"
           }`}
         >
           →
         </motion.button>
       </div>
 
-      {/* Idea List */}
+      {/* Liste der eingegebenen Ideen */}
       <div className="mt-6 w-full max-w-lg space-y-3">
         <AnimatePresence>
           {ideas.map((idea) => (
@@ -121,16 +132,17 @@ export const HomeView = () => {
         </AnimatePresence>
       </div>
 
+      {/* Button für Inspiration */}
       <motion.button
         onClick={showRandomInspiration}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
-        className="fixed bottom-6 right-6 px-5 py-2 bg-orange-500 hover:bg-orange-600 rounded-lg font-semibold shadow-lg"
+        className="fixed bottom-6 right-6 px-5 py-2 bg-sky-400 hover:opacity-75 rounded-lg font-semibold shadow-lg"
       >
         ✨
       </motion.button>
 
-      {/* Inspiration Popup */}
+      {/* Pop-Up für Inspiration */}
       <AnimatePresence>
         {inspirationText && (
           <motion.div

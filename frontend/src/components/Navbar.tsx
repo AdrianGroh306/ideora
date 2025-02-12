@@ -1,23 +1,54 @@
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { FaUserCircle } from 'react-icons/fa';
-import { motion } from 'framer-motion';
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { FaUserCircle } from "react-icons/fa";
+import { Lightbulb } from "lucide-react";
+import { motion } from "framer-motion";
 
 export const Navbar = () => {
   const navigate = useNavigate();
   const [isProfileOpen, setProfileOpen] = useState(false);
+  const [animateBulb, setAnimateBulb] = useState(true);
 
   return (
     <>
       <div className="fixed top-0 left-0 w-full px-8 py-4 flex items-center justify-between bg-transparent z-50">
-        {/* Ideora Logo */}
+        
+        {/* Ideora Logo mit animierter Glühbirne */}
         <span 
-          onClick={() => navigate('/')} 
-          className="text-3xl font-extrabold text-white tracking-wide focus:outline-none cursor-pointer"
+          onClick={() => navigate("/")} 
+          className="text-3xl font-medium text-white tracking-wide focus:outline-none cursor-pointer flex items-center"
         >
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-500">
-            Ideora
-          </span>
+          {/* Dickere, leuchtende Glühbirne als "i" */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.7 }}
+            animate={animateBulb ? { opacity: 1, scale: 1.1 } : {}}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="relative flex items-center"
+          >
+            <Lightbulb 
+              className="text-white drop-shadow-[0_0_25px_rgba(255,255,255,1)]"
+              strokeWidth={3} 
+              size={40}
+            />
+            {/* Heller, pulsierender Schein */}
+            {animateBulb && (
+              <motion.div 
+                className="absolute inset-0 w-full h-full rounded-full bg-white opacity-50 blur-lg"
+                animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0.8, 0.5] }}
+                transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+              />
+            )}
+          </motion.div>
+
+          {/* "deora" mit weichem Fade-in */}
+          <motion.span 
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-white ml-1 text-2xl"
+          >
+            deora
+          </motion.span>
         </span>
 
         {/* Profil-Button */}
@@ -30,11 +61,9 @@ export const Navbar = () => {
         </button>
       </div>
 
-      {/* Sperrendes Profile Modal */}
+      {/* Profile Modal */}
       {isProfileOpen && (
-        <div 
-          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-md z-[100]"
-        >
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-md z-[100]">
           <motion.div 
             className="bg-gray-900 p-6 rounded-lg shadow-lg max-w-sm w-full"
             initial={{ opacity: 0, scale: 0.9 }}
