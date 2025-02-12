@@ -1,16 +1,10 @@
 import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { Navbar } from "../components/Navbar"
 import { useNavigate } from "react-router-dom"
 
-interface IdeaEntry {
-  id: number
-  title: string
-}
-
 export const HomeView = () => {
   const navigate = useNavigate()
-  const [ideas, setIdeas] = useState<IdeaEntry[]>([])
   const [inputValue, setInputValue] = useState("")
   const [progress, setProgress] = useState(0)
   const [typing, setTyping] = useState(false)
@@ -27,10 +21,12 @@ export const HomeView = () => {
 
   function addIdea() {
     if (inputValue.trim()) {
-      const newIdea: IdeaEntry = { id: Date.now(), title: inputValue.trim() }
-      setIdeas([...ideas, newIdea])
+      const newIdea = { id: Date.now(), title: inputValue.trim() }
       setInputValue("")
       setProgress(0)
+
+      // Direkt zur DreamView navigieren
+      navigate(`/dream/${newIdea.id}`, { state: { dreamTitle: newIdea.title } })
     }
   }
 
@@ -58,9 +54,8 @@ export const HomeView = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-900 via-blue-900 to-black text-white px-4">
-
       <Navbar />
-      
+
       {/* Hero Section */}
       <motion.h1
         className="text-6xl font-extrabold mb-4 text-center tracking-wide drop-shadow-lg"
@@ -68,7 +63,7 @@ export const HomeView = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        Bring Your <span className="text-sky-400">Dreams</span> to Life 
+        Bring Your <span className="text-sky-400">Dreams</span> to Life
       </motion.h1>
 
       <motion.p
@@ -111,25 +106,6 @@ export const HomeView = () => {
         >
           →
         </motion.button>
-      </div>
-
-      {/* Liste der eingegebenen Ideen */}
-      <div className="mt-6 w-full max-w-lg space-y-3">
-        <AnimatePresence>
-          {ideas.map((idea) => (
-            <motion.div
-              key={idea.id}
-              onClick={() => navigate(`/dream/${idea.id}`, { state: { dreamTitle: idea.title } })}
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 50 }}
-              whileHover={{ scale: 1.05 }}
-              className="bg-gray-700 px-4 py-3 rounded-lg cursor-pointer shadow-md"
-            >
-              {idea.title}
-            </motion.div>
-          ))}
-        </AnimatePresence>
       </div>
 
       {/* Button für Inspiration */}

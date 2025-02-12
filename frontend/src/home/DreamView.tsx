@@ -1,11 +1,12 @@
-import { useLocation,} from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { FaGlobe, FaLock} from 'react-icons/fa'
+import { FaGlobe, FaLock, FaArrowLeft } from 'react-icons/fa'
 import { Navbar } from '../components/Navbar'
 
 export const DreamView = () => {
   const location = useLocation()
+  const navigate = useNavigate()
   const dreamTitle = location.state?.dreamTitle || "Your Dream"
 
   const [visibility, setVisibility] = useState<'private' | 'public'>('private')
@@ -27,26 +28,34 @@ export const DreamView = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start pt-20 bg-gradient-to-b from-gray-900 via-purple-900 to-black text-white px-4 relative">
-      
-    <Navbar />
+    <div className="min-h-screen flex flex-col items-center justify-start pt-20 bg-gradient-to-b from-gray-900 via-blue-900 to-black text-white px-4 relative">
 
-      {/* Grid-Layout für bessere Struktur */}
-      <motion.div 
+      <Navbar />
+      
+      {/* Zurück zur Übersicht */}
+      <motion.button
+        onClick={() => navigate('/ideas')}
+        className="absolute top-16 left-4 flex items-center px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-all"
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <FaArrowLeft className="w-5 h-5 text-gray-400 mr-2" />
+        <span className="text-white">All Ideas</span>
+      </motion.button>
+
+      <motion.div
         className="w-full max-w-4xl grid grid-cols-7 gap-4 items-start mt-6"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        {/* Titel (2. Spalte von 5, größer & linksbündig) */}
-        <h1 className="col-start-2 col-span-3 text-5xl p-2 font-bold text-left bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-purple-500 drop-shadow-md">
+        <h1 className="col-start-2 col-span-5 text-5xl p-2 font-bold text-left bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-purple-500 drop-shadow-md">
           {dreamTitle}
         </h1>
-
-        {/* Visibility Toggle */}
         <div className="col-start-7 flex pt-6 items-center justify-end">
-          <button 
-            onClick={toggleVisibility} 
+          <button
+            onClick={toggleVisibility}
             className="flex items-center px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 transition-all space-x-2"
           >
             {visibility === 'public' ? <FaGlobe className="w-5 h-5 text-blue-400" /> : <FaLock className="w-5 h-5 text-gray-400" />}
@@ -55,8 +64,7 @@ export const DreamView = () => {
         </div>
       </motion.div>
 
-      {/* Dream Buddy System */}
-      <motion.div 
+      <motion.div
         className="mt-4 w-full max-w-lg"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -87,8 +95,7 @@ export const DreamView = () => {
         )}
       </motion.div>
 
-      {/* Action Plan */}
-      <motion.div 
+      <motion.div
         className="mt-4 w-full max-w-lg"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -96,7 +103,7 @@ export const DreamView = () => {
       >
         <h2 className="text-2xl font-semibold text-pink-400">🚀 Action Plan</h2>
         <ul className="mt-3 space-y-2">
-          <motion.li 
+          <motion.li
             className="px-4 py-2 bg-gray-800 rounded-lg flex items-center"
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
@@ -105,7 +112,7 @@ export const DreamView = () => {
             <input type="checkbox" className="mr-2" />
             Define your first step
           </motion.li>
-          <motion.li 
+          <motion.li
             className="px-4 py-2 bg-gray-800 rounded-lg flex items-center"
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
