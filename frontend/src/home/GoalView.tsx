@@ -1,49 +1,48 @@
-import { useEffect, useState } from "react"
-import { useLocation } from "react-router-dom"
-import { motion } from "framer-motion"
-import { FaGlobe, FaLock } from "react-icons/fa"
-import { Navbar } from "../components/Navbar"
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { motion } from "framer-motion";
+import { FaGlobe, FaLock } from "react-icons/fa";
+import { Navbar } from "../components/Navbar";
 
 interface Goal {
-  _id: string
-  title: string
-  visibility: "private" | "public"
-  buddy: string | null
-  isGoal: boolean
-  createdAt: string
+  _id: string;
+  title: string;
+  visibility: "private" | "public";
+  buddy: string | null;
+  isGoal: boolean;
+  createdAt: string;
 }
 
 export const GoalView = () => {
-  const location = useLocation()
-  const goalId = location.state?.goalId
+  const { goalId } = useParams<{ goalId: string }>();
 
-  const [goal, setGoal] = useState<Goal | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [buddyAccepted, setBuddyAccepted] = useState(false)
+  const [goal, setGoal] = useState<Goal | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [buddyAccepted, setBuddyAccepted] = useState(false);
 
   useEffect(() => {
     if (!goalId) {
-      setError("Goal ID is missing.")
-      setLoading(false)
-      return
+      setError("Goal ID is missing.");
+      setLoading(false);
+      return;
     }
 
     fetch(`http://localhost:5001/api/goals/${goalId}`)
       .then((res) => res.json())
       .then((data) => {
-        setGoal(data)
-        setLoading(false)
+        setGoal(data);
+        setLoading(false);
       })
       .catch(() => {
-        setError("Failed to load goal.")
-        setLoading(false)
-      })
-  }, [goalId])
+        setError("Failed to load goal.");
+        setLoading(false);
+      });
+  }, [goalId]);
 
   function toggleVisibility() {
-    if (!goal) return
-    const newVisibility = goal.visibility === "private" ? "public" : "private"
+    if (!goal) return;
+    const newVisibility = goal.visibility === "private" ? "public" : "private";
 
     fetch(`http://localhost:5001/api/goals/${goal._id}`, {
       method: "PUT",
@@ -51,13 +50,13 @@ export const GoalView = () => {
       body: JSON.stringify({ visibility: newVisibility }),
     })
       .then((res) => res.json())
-      .then((updatedGoal) => setGoal(updatedGoal))
+      .then((updatedGoal) => setGoal(updatedGoal));
   }
 
   function assignRandomBuddy() {
-    if (!goal) return
-    const buddyNames = ["Alex", "Jordan", "Casey", "Taylor", "Morgan"]
-    const newBuddy = buddyNames[Math.floor(Math.random() * buddyNames.length)]
+    if (!goal) return;
+    const buddyNames = ["Alex", "Jordan", "Casey", "Taylor", "Morgan"];
+    const newBuddy = buddyNames[Math.floor(Math.random() * buddyNames.length)];
 
     fetch(`http://localhost:5001/api/goals/${goal._id}`, {
       method: "PUT",
@@ -65,15 +64,15 @@ export const GoalView = () => {
       body: JSON.stringify({ buddy: newBuddy }),
     })
       .then((res) => res.json())
-      .then((updatedGoal) => setGoal(updatedGoal))
+      .then((updatedGoal) => setGoal(updatedGoal));
   }
 
   function acceptBuddy() {
-    setBuddyAccepted(true)
+    setBuddyAccepted(true);
   }
 
-  if (loading) return <p className="text-white">Loading...</p>
-  if (error) return <p className="text-red-500">{error}</p>
+  if (loading) return <p className="text-white">Loading...</p>;
+  if (error) return <p className="text-red-500">{error}</p>;
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start pt-20 bg-gradient-to-b from-gray-900 via-blue-900 to-black text-white px-4 relative">
@@ -167,5 +166,5 @@ export const GoalView = () => {
         </ul>
       </motion.div>
     </div>
-  )
-}
+  );
+};

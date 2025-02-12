@@ -8,7 +8,7 @@ export const AppRouter = () => {
     <Router>
       <Routes>
         <Route path="/" element={<HomeView />} />
-        <Route path="/goal/:idea" element={<GoalView />} />
+        <Route path="/goal/:goalId" element={<GoalView />} />
         <Route path="/ideas" element={<GoalsHub />} />
       </Routes>
     </Router>
